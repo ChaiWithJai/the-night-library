@@ -17,23 +17,27 @@
     color: var(--ink); font-family: var(--serif); overflow-x: hidden;
   }
   #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-  .wrap { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
+  .wrap { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 24px 20px 40px; }
+  /* Story mode: the whole experience composes into one viewport — no page scroll. */
+  body.reading { overflow: hidden; }
+  body.reading .wrap { height: 100dvh; display: flex; flex-direction: column; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); }
 
-  header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; flex: none; }
   h1 { font-size: 21px; font-weight: 500; letter-spacing: .12em; color: var(--gold); }
   h1 .thin { color: var(--ink); opacity: .55; font-style: italic; letter-spacing: .04em; }
+  body.reading h1 { font-size: 14px; }
+  body.reading h1 .thin { display: none; }
   .sub { font-size: 13px; opacity: .5; font-style: italic; margin-bottom: 26px; }
+  body.reading .sub { display: none; }
 
-  /* ---- telemetry: the intelligence-density meter ---- */
-  .meter { background: #ffffff08; border: 1px solid #ffffff14; border-radius: 14px; padding: 12px 16px; margin-bottom: 22px; font-size: 12.5px; display: none; }
+  /* ---- telemetry: the intelligence-density meter (slim strip in story mode) ---- */
+  .meter { background: #ffffff08; border: 1px solid #ffffff14; border-radius: 12px; padding: 7px 12px 9px; margin-bottom: 10px; font-size: 11.5px; display: none; flex: none; }
   .meter.on { display: block; }
-  .meter .row { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; color: #cfc6b0; }
+  .meter .row { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 6px; color: #cfc6b0; white-space: nowrap; }
   .meter b { color: var(--gold); font-weight: 600; }
-  .track { position: relative; height: 8px; border-radius: 4px; background: #ffffff10; overflow: hidden; }
-  .track .gen { position: absolute; inset: 0 auto 0 0; width: 0%; background: linear-gradient(90deg, #5b6db3, #8fa3e8); border-radius: 4px; transition: width .3s; }
-  .track .read { position: absolute; inset: 0 auto 0 0; width: 0%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 4px; transition: width .3s; }
-  .legend { display: flex; gap: 16px; margin-top: 7px; font-size: 11px; opacity: .65; }
-  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+  .track { position: relative; height: 6px; border-radius: 3px; background: #ffffff10; overflow: hidden; }
+  .track .gen { position: absolute; inset: 0 auto 0 0; width: 0%; background: linear-gradient(90deg, #5b6db3, #8fa3e8); border-radius: 3px; transition: width .3s; }
+  .track .read { position: absolute; inset: 0 auto 0 0; width: 0%; background: linear-gradient(90deg, var(--gold-dim), var(--gold)); border-radius: 3px; transition: width .3s; }
 
   /* ---- canon picker ---- */
   .canon { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -44,35 +48,38 @@
   .seed .hookline { font-size: 12.5px; line-height: 1.5; opacity: .6; font-style: italic; }
   .seed .vals { margin-top: 10px; font-size: 10.5px; letter-spacing: .08em; color: #8fa3e8; }
 
-  /* ---- story view ---- */
+  /* ---- story view: frame + page + choices share one viewport ---- */
   #story { display: none; }
-  #story.on { display: block; }
-  .frame { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 18px; overflow: hidden; border: 1px solid #ffffff1c; margin-bottom: 8px; background: var(--night-deep); }
+  #story.on { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .frame { position: relative; width: 100%; aspect-ratio: 16/9; max-height: 32dvh; border-radius: 16px; overflow: hidden; border: 1px solid #ffffff1c; margin-bottom: 8px; background: var(--night-deep); flex: none; }
   .frame img, .frame canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
   .chip { position: absolute; right: 10px; bottom: 10px; font-size: 10.5px; letter-spacing: .08em; padding: 4px 10px; border-radius: 20px; background: #060a18cc; border: 1px solid #ffffff22; color: #cfc6b0; }
   .chip.live { color: var(--gold); border-color: var(--gold-dim); }
   .frame .working { position: absolute; left: 12px; bottom: 10px; font-size: 11px; font-style: italic; opacity: 0; transition: opacity .4s; color: #cfc6b0; }
   .frame .working.on { opacity: .85; }
 
-  .pagewrap { background: #ffffff06; border: 1px solid #ffffff12; border-radius: 18px; padding: 26px 26px 20px; min-height: 200px; }
-  #page { font-size: 18.5px; line-height: 1.75; color: var(--paper); }
+  .pagewrap { background: #ffffff06; border: 1px solid #ffffff12; border-radius: 16px; padding: 18px 20px 14px; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  #page { font-size: 17px; line-height: 1.7; color: var(--paper); flex: 1; min-height: 0; overflow-y: auto; scroll-behavior: smooth; overscroll-behavior: contain; padding-right: 4px; }
+  #page::-webkit-scrollbar { width: 3px; } #page::-webkit-scrollbar-thumb { background: #ffffff22; border-radius: 2px; }
   #page .beat { margin-bottom: 1.1em; }
-  #page .w { opacity: 0; }
-  #page .w.lit { opacity: 1; transition: opacity .35s; }
+  /* Unread words hold their layout slot from the moment they stream in (no reflow),
+   * then simply brighten at reading pace — steady as a page, alive as a voice. */
+  #page .w { opacity: .13; transition: opacity .45s ease; }
+  #page .w.lit { opacity: 1; }
   .caret { display: inline-block; width: 2px; height: 1em; background: var(--gold); vertical-align: -2px; animation: blink 1s infinite; }
   @keyframes blink { 50% { opacity: 0; } }
 
-  .choices { display: none; gap: 12px; margin-top: 18px; }
+  .choices { display: none; gap: 10px; margin-top: 12px; flex: none; }
   .choices.on { display: flex; }
-  .choice { flex: 1; font-family: var(--serif); font-size: 14.5px; line-height: 1.4; padding: 13px 16px; border-radius: 14px; border: 1px solid var(--gold-dim); background: transparent; color: var(--gold); cursor: pointer; transition: background .2s; }
+  .choice { flex: 1; font-family: var(--serif); font-size: 13.5px; line-height: 1.35; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--gold-dim); background: transparent; color: var(--gold); cursor: pointer; transition: background .2s; }
   .choice:hover { background: #e8c97a14; }
-  .actions { display: flex; gap: 14px; margin-top: 18px; justify-content: space-between; align-items: center; }
-  .linkish { background: none; border: none; color: #8fa3e8; font-family: var(--serif); font-size: 13px; font-style: italic; cursor: pointer; opacity: .8; }
-  .truth { margin-top: 22px; padding: 14px 18px; border-left: 2px solid var(--gold-dim); font-size: 13px; line-height: 1.6; opacity: .7; font-style: italic; display: none; }
+  .actions { display: flex; gap: 14px; margin-top: 10px; justify-content: space-between; align-items: center; flex: none; }
+  .linkish { background: none; border: none; color: #8fa3e8; font-family: var(--serif); font-size: 12px; font-style: italic; cursor: pointer; opacity: .8; }
+  .truth { margin: 10px 0 0; padding: 10px 16px; border-left: 2px solid var(--gold-dim); font-size: 12.5px; line-height: 1.5; opacity: .7; font-style: italic; display: none; flex: none; }
   .truth.on { display: block; }
-  .goodnight { text-align: center; font-size: 15px; font-style: italic; color: var(--gold); margin-top: 24px; display: none; }
+  .goodnight { text-align: center; font-size: 14px; font-style: italic; color: var(--gold); margin-top: 10px; display: none; flex: none; }
   .goodnight.on { display: block; }
-  @media (max-width: 540px) { .canon { grid-template-columns: 1fr; } #page { font-size: 17px; } }
+  @media (max-width: 540px) { .canon { grid-template-columns: 1fr; } #page { font-size: 16px; } }
 </style>
 </head>
 <body>
@@ -83,16 +90,12 @@
   </header>
   <div class="sub">A 590MB writer and a 1.2GB illustrator, living entirely on this machine. Nothing your child says tonight leaves this room.</div>
 
-  <div class="meter" id="meter">
+  <div class="meter" id="meter" title="blue: Bonsai writing · gold: you, reading aloud">
     <div class="row">
-      <span>writer <b id="m-tps">—</b> tok/s · first word in <b id="m-ttft">—</b></span>
+      <span>Bonsai <b id="m-tps">—</b> tok/s · first word <b id="m-ttft">—</b></span>
       <span>written <b id="m-ahead">0s</b> ahead of your voice</span>
     </div>
     <div class="track"><div class="gen" id="bar-gen"></div><div class="read" id="bar-read"></div></div>
-    <div class="legend">
-      <span><span class="dot" style="background:#8fa3e8"></span>Bonsai writing (~30× reading speed)</span>
-      <span><span class="dot" style="background:var(--gold)"></span>you, reading aloud</span>
-    </div>
   </div>
 
   <div class="canon" id="canon"></div>
@@ -232,9 +235,12 @@ function renderWords(div, text, caret) {
   }
   updateMeter();
 }
-setInterval(() => {   // the reading metronome
+setInterval(() => {   // the reading metronome — the page follows the reader, not the writer
   const unlit = document.querySelector("#page .w:not(.lit)");
-  if (unlit) { unlit.classList.add("lit"); S.litWords++; updateMeter(); }
+  if (unlit) {
+    unlit.classList.add("lit"); S.litWords++; updateMeter();
+    unlit.scrollIntoView({ block: "nearest" });
+  }
 }, 1000 / READ_WPS);
 
 function updateMeter() {
@@ -340,6 +346,7 @@ function drawDreamscape(scene) {
 /* ============================ story flow ============================ */
 async function beginStory(seed) {
   S.seed = seed; S.beats = []; S.genWords = 0; S.litWords = 0; S.tokens = 0; S.ttft = null; S.ending = false;
+  document.body.classList.add("reading");
   el("#canon").style.display = "none";
   el("#story").classList.add("on");
   el("#meter").classList.add("on");
