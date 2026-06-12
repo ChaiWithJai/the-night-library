@@ -126,8 +126,13 @@
 <script>
 /* ============================== config ============================== */
 const WRITER = "http://127.0.0.1:8080";          // llama-server, Ternary-Bonsai-1.7B
-const ILLUSTRATOR = "http://127.0.0.1:8800";     // Bonsai-Image-Demo studio (optional)
-const SAMPLING = { temperature: 0.5, top_k: 20, top_p: 0.85, repeat_penalty: 1.15, repeat_last_n: 256 };  // card sampling + anti-loop for multi-beat stories
+// The illustrator is reached via the SAME-ORIGIN proxy at /illustrate
+// (scripts/serve.py → studio :8800). Direct browser calls die on CORS.
+/* Card sampling (temp .5 / top-k 20 / top-p .85). repeat_penalty stays LOW and
+ * short-windowed: at 1.15 it was amputating proper nouns on second mention —
+ * "Hanuman" became "Han", "Uruk" became "U" — because a repeated name's tokens
+ * get penalized mid-word. Forward motion comes from the prompt, not the penalty. */
+const SAMPLING = { temperature: 0.5, top_k: 20, top_p: 0.85, repeat_penalty: 1.05, repeat_last_n: 64 };
 const READ_WPS = 2.6;                             // calm read-aloud pace, words/sec
 
 /* ============================ star field ============================ */
@@ -170,7 +175,14 @@ async function loadCanon() {
 /* ===================== the writer (streaming) ===================== */
 function narratorSystem(seed) {
   return `You are a gentle bedtime storyteller in the oral tradition. Tonight's story draws on: "${seed.title}" (${seed.civilization}). Honor the source: ${seed.truth}
-Rules: warm, concrete, sensory language a 6-year-old loves and an adult admires. Short sentences. No violence dwelt upon, no fear without comfort. Weave in ${seed.values.join(" and ")} by showing, not preaching. Write ONE story beat of 90-120 words, then stop. Never summarize; always be IN the scene. Each beat must move FORWARD — never re-describe a moment already told.`;
+The people and places of this story, with their full names: ${seed.cast}.
+Rules:
+- Use the names above EXACTLY as written, always in full. Never shorten, abbreviate, or rename anyone.
+- Warm, concrete, sensory language a 6-year-old loves and an adult admires. Short sentences.
+- Tell what people say as narration (Enkidu asked what kindness meant) — never use quotation marks.
+- No violence dwelt upon, no fear without comfort. Weave in ${seed.values.join(" and ")} by showing, not preaching.
+- Write ONE story beat of 90-120 words, then stop. Always be IN the scene; never summarize.
+- Each beat moves FORWARD — never re-describe a moment already told.`;
 }
 
 async function streamBeat(userMsg) {
@@ -225,8 +237,16 @@ async function streamBeat(userMsg) {
 /* Words appear instantly as generated but UNLIT; a metronome lights them at
  * read-aloud pace. The gap between the two cursors IS intelligence density. */
 function renderWords(div, text, caret) {
-  const words = text.trim().split(/\s+/);
-  const have = div.querySelectorAll(".w").length;
+  const words = text.trimStart().split(/\s+/).filter(Boolean);
+  const spans = div.querySelectorAll(".w");
+  const have = spans.length;
+  // Tokens arrive mid-word: a delta can EXTEND the last rendered word
+  // ("Gil" → "Gilgamesh.") rather than start a new one. Refresh it first —
+  // skipping this drops word-endings and their punctuation on the floor.
+  if (have > 0 && words[have - 1] !== undefined) {
+    const lw = words[have - 1] + " ";
+    if (spans[have - 1].textContent !== lw) spans[have - 1].textContent = lw;
+  }
   for (let i = have; i < words.length; i++) {
     const sp = document.createElement("span");
     sp.className = "w"; sp.textContent = words[i] + " ";
@@ -283,30 +303,33 @@ const BRANCH_SCHEMA = {
   required: ["a", "b"], additionalProperties: false
 };
 
-/* ===================== the illustrator (two backends) ===================== */
+/* ===================== the illustrator (two painters, one contract) =====================
+ * The page never talks to the image studio directly: its FastAPI sends no CORS
+ * headers, so the browser's preflight dies. scripts/serve.py proxies
+ * POST /illustrate → studio /generate on the SAME origin. The studio's contract
+ * (verified against its live OpenAPI): {prompt, seed, steps, width, height} in,
+ * raw image/png out. */
 async function illustrate(scene) {
   drawDreamscape(scene);                     // instant, always
   el("#ill-working").classList.add("on");
   try {
-    const ctl = new AbortController(); setTimeout(() => ctl.abort(), 45000);
-    const r = await fetch(ILLUSTRATOR + "/generate", {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 90000); // cold render compiles kernels
+    const r = await fetch("/illustrate", {
       method: "POST", headers: { "Content-Type": "application/json" },
       signal: ctl.signal,
       body: JSON.stringify({
         prompt: scene.image_prompt + ", children's storybook illustration, soft warm light, gentle, painterly",
-        size: "512x512", seed: S.illSeed
+        width: 512, height: 512, steps: 4, seed: S.illSeed
       })
     });
-    if (!r.ok) throw new Error(r.status);
-    const data = await r.json().catch(async () => ({ _blob: await r.blob() }));
-    // normalize the studio's response shape (b64 / url / path / raw blob)
-    let src = null;
-    if (data._blob) src = URL.createObjectURL(data._blob);
-    else if (data.image) src = data.image.startsWith("http") || data.image.startsWith("/") ? data.image : "data:image/png;base64," + data.image;
-    else if (data.images?.[0]) src = "data:image/png;base64," + data.images[0];
-    else if (data.url) src = data.url;
-    if (!src) throw new Error("unknown response shape");
-    const img = el("#ill"); img.src = src; img.style.display = "block";
+    clearTimeout(timer);
+    if (!r.ok) throw new Error(String(r.status));
+    const blob = await r.blob();
+    const img = el("#ill");
+    if (img.src.startsWith("blob:")) URL.revokeObjectURL(img.src);
+    img.src = URL.createObjectURL(blob);
+    img.style.display = "block";
     el("#dream").style.display = "none";
     el("#ill-chip").textContent = "Bonsai Image 4B · this device";
     el("#ill-chip").classList.add("live");
