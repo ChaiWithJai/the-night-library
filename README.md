@@ -45,12 +45,14 @@ BACKEND_PORT=8800 ./scripts/serve.sh    # the library finds it automatically
 
 ## Choose your door
 
-| If you are… | Read… | You'll walk away able to… |
+| If you want to… | Read… | You'll walk away able to… |
 |---|---|---|
-| **here for tonight's story** | you're done — go pick one | run it for someone you love |
-| **wondering why this matters** | [BONSAI_101.md](BONSAI_101.md) | explain intelligence density, with numbers, to anyone |
-| **PrismML team / community** | [docs/FIELD_GUIDE.md](docs/FIELD_GUIDE.md) | extend the canon, swap backends, reuse the patterns |
-| **a hard-parts person** | [docs/UNDER_THE_HOOD.md](docs/UNDER_THE_HOOD.md) | trace every byte from the model to the moonlight |
+| **hear tonight's story** | you're done — go pick one | run it for someone you love |
+| **demo it** | [docs/DEMO.md](docs/DEMO.md) | give the 4-minute demo, with recovery moves |
+| **understand why it matters** | [BONSAI_101.md](BONSAI_101.md) | explain intelligence density, with numbers, to anyone |
+| **extend or reuse it** | [docs/EXTENDING.md](docs/EXTENDING.md) + [docs/REFERENCE.md](docs/REFERENCE.md) | add seeds, swap backends, steal the patterns |
+| **join the tribe** | [docs/FIELD_GUIDE.md](docs/FIELD_GUIDE.md) + [CONTRIBUTING.md](CONTRIBUTING.md) | speak the vocabulary, pass the initiation |
+| **go under the hood** | [docs/UNDER_THE_HOOD.md](docs/UNDER_THE_HOOD.md) | trace every byte from the model to the moonlight |
 
 ## What's in the building
 

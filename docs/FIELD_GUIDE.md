@@ -31,9 +31,11 @@ projects.
 :8400  python http.server, this repo       (the library itself)
 ```
 
-The page calls the writer **directly from the browser** — llama-server's CORS is
-open by default, so there is no proxy, no backend of our own, no place for a
-secret to hide. View source; that's the whole system.
+The page calls the writer **directly from the browser** — llama-server's CORS
+is open by default. The illustrator is the one exception: its FastAPI sends no
+CORS headers, so `scripts/serve.py` (stdlib, ~90 lines) forwards
+`POST /illustrate` to it same-origin. That's the entire server surface we own;
+view source on one HTML file and one Python file and you've read the system.
 
 ## 3. The two patterns worth stealing
 
@@ -71,10 +73,12 @@ that proves it, and file it. On this ship, finding a footgun is rank.
 
 ## 5. For the PrismML team specifically
 
-- **The integration surface you own:** `POST /generate` on the image studio.
-  This repo's client normalizes b64 / url / blob response shapes
-  (`web/index.html`, search `normalize`) — if you stabilize the shape, say so
-  in your README and we'll pin it.
+- **The integration surface you own:** `POST /generate` on the image studio
+  ({prompt, seed, steps, width, height} → raw `image/png`; verified against
+  the live OpenAPI). One upstream gift would help every web integrator:
+  **add `CORSMiddleware` to the FastAPI backend** — today browsers can't call
+  it cross-origin at all, and every web demo (including this one) has to
+  carry a proxy (`scripts/serve.py`).
 - **What your models are doing here:** the 1.7B is the writer *and* the judge
   *and* the art director (scene JSON) — three roles, one 590MB file, because
   grammar pinning makes each role contract-bound.

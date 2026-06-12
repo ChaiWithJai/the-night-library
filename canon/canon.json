@@ -6,108 +6,156 @@
       "title": "The King Who Learned to Have a Friend",
       "civilization": "Mesopotamia",
       "era": "~2100 BCE",
-      "values": ["friendship", "humility"],
+      "values": [
+        "friendship",
+        "humility"
+      ],
       "hook": "The oldest story humans ever wrote down is about a king who was too strong, and the wild man who became his best friend.",
-      "truth": "The Epic of Gilgamesh is the oldest surviving great work of literature, pressed into clay tablets four thousand years ago."
+      "truth": "The Epic of Gilgamesh is the oldest surviving great work of literature, pressed into clay tablets four thousand years ago.",
+      "cast": "Gilgamesh (the king), Enkidu (the wild man who becomes his friend), Uruk (the city)"
     },
     {
       "id": "hanuman_leap",
       "title": "The Leap Across the Sea",
       "civilization": "India",
       "era": "Ramayana",
-      "values": ["courage", "self-discovery"],
+      "values": [
+        "courage",
+        "self-discovery"
+      ],
       "hook": "Hanuman had forgotten he could fly — until a friend needed him on the far side of the ocean.",
-      "truth": "In the Ramayana, Hanuman's powers return only when someone reminds him who he is. The story is told to children across South and Southeast Asia."
+      "truth": "In the Ramayana, Hanuman's powers return only when someone reminds him who he is. The story is told to children across South and Southeast Asia.",
+      "cast": "Hanuman (the monkey hero), Jambavan (the wise bear who reminds him), Sita (the friend who waits), Lanka (the island across the sea)"
     },
     {
       "id": "anansi_wisdom",
       "title": "Anansi and the Pot of Wisdom",
       "civilization": "West Africa (Akan)",
       "era": "oral tradition",
-      "values": ["humility", "sharing"],
+      "values": [
+        "humility",
+        "sharing"
+      ],
       "hook": "The spider who tried to keep all the wisdom in the world inside one pot — and what his small son taught him.",
-      "truth": "Anansi stories traveled from Ghana across the Atlantic and survived everything; they became Br'er Rabbit in America. Stories are cargo that cannot be confiscated."
+      "truth": "Anansi stories traveled from Ghana across the Atlantic and survived everything; they became Br'er Rabbit in America. Stories are cargo that cannot be confiscated.",
+      "cast": "Anansi (the spider), Ntikuma (his young son), Nyame (the sky god)"
     },
     {
       "id": "maui_sun",
       "title": "The Boy Who Slowed the Sun",
       "civilization": "Polynesia",
       "era": "oral tradition",
-      "values": ["ingenuity", "service"],
+      "values": [
+        "ingenuity",
+        "service"
+      ],
       "hook": "The days were too short for anyone to finish their work, so Māui braided a rope strong enough to catch the sun.",
-      "truth": "Māui is the great trickster-hero of Polynesian navigators — people who crossed the largest ocean on Earth reading stars and waves, with no instruments."
+      "truth": "Māui is the great trickster-hero of Polynesian navigators — people who crossed the largest ocean on Earth reading stars and waves, with no instruments.",
+      "cast": "Maui (the clever hero), Hina (his mother), Tama-nui-te-ra (the Sun)"
     },
     {
       "id": "odysseus_cyclops",
       "title": "Nobody Escapes the Giant",
       "civilization": "Greece",
       "era": "~800 BCE",
-      "values": ["cleverness", "patience"],
+      "values": [
+        "cleverness",
+        "patience"
+      ],
       "hook": "Trapped in a cave by a one-eyed giant, the cleverest sailor alive saved his crew with a fake name and a flock of sheep.",
-      "truth": "Homer's Odyssey was sung for centuries before it was written. 'Nobody' is still the best trick in literature."
+      "truth": "Homer's Odyssey was sung for centuries before it was written. 'Nobody' is still the best trick in literature.",
+      "cast": "Odysseus (the clever captain), Polyphemus (the one-eyed giant), Ithaca (home)"
     },
     {
       "id": "sequoyah_letters",
       "title": "The Man Who Caught Words",
       "civilization": "Cherokee Nation",
       "era": "1821",
-      "values": ["perseverance", "gift-giving"],
+      "values": [
+        "perseverance",
+        "gift-giving"
+      ],
       "hook": "Sequoyah could not read any language — so he spent twelve years inventing a way to write his own, and gave it to every Cherokee child.",
-      "truth": "Sequoyah created the Cherokee syllabary alone, one of the only writing systems in history invented by a single person. Within years, Cherokee literacy surpassed that of their neighbors."
+      "truth": "Sequoyah created the Cherokee syllabary alone, one of the only writing systems in history invented by a single person. Within years, Cherokee literacy surpassed that of their neighbors.",
+      "cast": "Sequoyah (the inventor), Ayoka (his daughter who learns first), the Cherokee Nation (his people)"
     },
     {
       "id": "wright_kitty_hawk",
       "title": "Twelve Seconds in the Wind",
       "civilization": "United States",
       "era": "1903-12-17",
-      "values": ["persistence", "method"],
+      "values": [
+        "persistence",
+        "method"
+      ],
       "hook": "Two brothers who fixed bicycles believed they could fly. The first flight lasted twelve seconds — shorter than this sentence takes to read aloud.",
-      "truth": "The Wright Flyer flew 120 feet at Kitty Hawk. Sixty-six years later, humans stood on the Moon. One lifetime."
+      "truth": "The Wright Flyer flew 120 feet at Kitty Hawk. Sixty-six years later, humans stood on the Moon. One lifetime.",
+      "cast": "Wilbur Wright and Orville Wright (the brothers), Kitty Hawk (the windy beach), the Flyer (their machine)"
     },
     {
       "id": "ada_engine",
       "title": "The Girl Who Dreamed a Thinking Machine",
       "civilization": "England",
       "era": "1843",
-      "values": ["imagination", "seeing-further"],
+      "values": [
+        "imagination",
+        "seeing-further"
+      ],
       "hook": "A hundred years before computers existed, Ada wrote about a machine that could weave numbers the way looms weave flowers.",
-      "truth": "Ada Lovelace wrote the first published algorithm — for a computer that was never built. She saw what it could become before anyone else did."
+      "truth": "Ada Lovelace wrote the first published algorithm — for a computer that was never built. She saw what it could become before anyone else did.",
+      "cast": "Ada Lovelace (the mathematician), Charles Babbage (the inventor of the engine), the Analytical Engine (the imagined machine)"
     },
     {
       "id": "apollo13",
       "title": "The Ship That Came Home",
       "civilization": "Earth",
       "era": "1970",
-      "values": ["resilience", "teamwork"],
+      "values": [
+        "resilience",
+        "teamwork"
+      ],
       "hook": "Three astronauts, a broken ship, and a room full of people on the ground who refused to stop solving the problem.",
-      "truth": "Apollo 13's crew survived on the lunar module's air and the ground crew's arithmetic. 'Failure is not an option' became a human inheritance."
+      "truth": "Apollo 13's crew survived on the lunar module's air and the ground crew's arithmetic. 'Failure is not an option' became a human inheritance.",
+      "cast": "Jim Lovell, Jack Swigert, and Fred Haise (the astronauts), Gene Kranz (the flight director on the ground), Aquarius (the lifeboat lander)"
     },
     {
       "id": "ibn_battuta",
       "title": "The Longest Walk in the World",
       "civilization": "Morocco / Dar al-Islam",
       "era": "1325-1354",
-      "values": ["curiosity", "openness"],
+      "values": [
+        "curiosity",
+        "openness"
+      ],
       "hook": "A young man left home for a pilgrimage and didn't stop traveling for twenty-nine years — three times farther than Marco Polo.",
-      "truth": "Ibn Battuta crossed 44 modern countries and dictated his Rihla from memory. The world has always been connected by the curious."
+      "truth": "Ibn Battuta crossed 44 modern countries and dictated his Rihla from memory. The world has always been connected by the curious.",
+      "cast": "Ibn Battuta (the traveler), Tangier (his home city), the Rihla (the book of his journeys)"
     },
     {
       "id": "wangari_trees",
       "title": "The Woman Who Planted a Forest",
       "civilization": "Kenya",
       "era": "1977-2011",
-      "values": ["stewardship", "starting-small"],
+      "values": [
+        "stewardship",
+        "starting-small"
+      ],
       "hook": "When the rivers dried and the firewood ran out, Wangari did not write a law. She planted a tree. Then thirty million more.",
-      "truth": "Wangari Maathai's Green Belt Movement won her the Nobel Peace Prize — the first for connecting peace to the soil itself."
+      "truth": "Wangari Maathai's Green Belt Movement won her the Nobel Peace Prize — the first for connecting peace to the soil itself.",
+      "cast": "Wangari Maathai (the planter), Mount Kenya (the mountain of her childhood), the Green Belt Movement (the planters she gathered)"
     },
     {
       "id": "hypatia_library",
       "title": "The Teacher of Alexandria",
       "civilization": "Egypt (Hellenistic)",
       "era": "~400 CE",
-      "values": ["love-of-learning", "courage"],
+      "values": [
+        "love-of-learning",
+        "courage"
+      ],
       "hook": "In the city with the greatest library on Earth, the most famous teacher was a woman who mapped the stars and asked her students to question everything.",
-      "truth": "Hypatia taught mathematics, astronomy, and philosophy to students of every faith. Libraries burn; the habit of asking does not."
+      "truth": "Hypatia taught mathematics, astronomy, and philosophy to students of every faith. Libraries burn; the habit of asking does not.",
+      "cast": "Hypatia (the teacher), Alexandria (her city), the great Library (her workshop)"
     }
   ]
 }
